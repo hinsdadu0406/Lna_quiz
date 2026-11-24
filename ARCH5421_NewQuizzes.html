@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARCH 5421–5422 · Mock Quizzes</title>
+<style>
+:root{--ink:#1c1c1a;--muted:#6b6b66;--line:#e2e0d8;--bg:#faf9f5;--card:#fff;--blue:#185FA5;--bluebg:#E6F1FB;--green:#0F6E56;--greenbg:#E1F5EE;--red:#A32D2D;--redbg:#FCEBEB;--amber:#854F0B;--amberbg:#FAEEDA}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:26px 20px 80px}
+header{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:14px}
+h1{font-size:24px;margin:0 0 4px;font-weight:700}
+.sub{color:var(--muted);font-size:13px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.tab{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 16px;font:inherit;font-size:14px;cursor:pointer;color:var(--ink)}
+.tab.on{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:600}
+.panel{display:none}.panel.on{display:block}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+.timer{background:var(--bluebg);color:var(--blue);border:1px solid #B5D4F4;border-radius:10px;padding:8px 14px;text-align:center;min-width:120px}
+.timer .lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.timer .val{font-size:24px;font-variant-numeric:tabular-nums;font-weight:700;line-height:1.2}
+.timer.warn{background:var(--amberbg);color:var(--amber);border-color:#FAC775}
+.timer.danger{background:var(--redbg);color:var(--red);border-color:#F7C1C1}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:14px}
+.info{font-size:13px;color:var(--muted)}
+.btn{background:var(--card);border:1px solid var(--ink);border-radius:8px;padding:7px 14px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink)}
+.btn:hover{background:var(--ink);color:#fff}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.q{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:15px 18px;margin:11px 0}
+.q .hd{display:flex;gap:10px;align-items:baseline;margin-bottom:8px}
+.num{font-weight:700;color:var(--blue);min-width:28px}
+.stem{font-weight:600;margin:0 0 9px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:7px 10px;border:1px solid transparent;border-radius:7px;cursor:pointer;margin:3px 0}
+.opt:hover{background:#f6f5f0}
+.opt input{margin-top:4px;accent-color:var(--blue)}
+.opt.sel{background:var(--bluebg);border-color:#B5D4F4}
+.opt.correct{background:var(--greenbg);border-color:#9FE1CB}
+.opt.wrong{background:var(--redbg);border-color:#F7C1C1}
+.opt .letter{font-weight:700;color:var(--muted);min-width:18px}
+.notice{background:var(--amberbg);border:1px solid #FAC775;color:var(--amber);border-radius:8px;padding:10px 14px;font-size:13px;margin:12px 0}
+.result{background:var(--card);border:2px solid var(--blue);border-radius:12px;padding:20px;margin:16px 0}
+.score{font-size:36px;font-weight:700;color:var(--blue);line-height:1.1}
+.grade{display:inline-block;background:var(--bluebg);color:var(--blue);padding:3px 12px;border-radius:20px;font-weight:700;font-size:13px;margin-left:10px}
+.rev{border-top:1px solid var(--line);padding:13px 0 4px}
+.rh{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px}
+.badge.ok{background:var(--greenbg);color:var(--green)}
+.badge.no{background:var(--redbg);color:var(--red)}
+.badge.na{background:#f1efe8;color:var(--muted)}
+.src{font-size:12.5px;background:#f7f6f1;border-left:3px solid var(--amber);padding:7px 11px;border-radius:0 6px 6px 0;margin:6px 0;color:#444}
+.why{font-size:13px;color:var(--muted)}
+.small{font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><h1>ARCH 5421–5422 · Mock Quizzes</h1>
+<div class="sub">Three separate quizzes in one file · Lecture 02, 03 and 05 · questions follow the tutor's sample style</div></header>
+<div class="tabs" id="tabs"></div>
+<div id="panels"></div>
+</div>
+<script>
+const DATA = {"L2": [{"q": "What is the essential role of a cooling tower in a central air-conditioning system?", "opts": ["To produce chilled water for the building", "To reject unwanted heat by cooling water through direct contact with air", "To filter pollutants from the supply air", "To store energy during off-peak hours"], "a": 1, "src": "L2 p.42", "why": "The cooling tower is the heat-rejection device; the chiller produces the chilled water."}, {"q": "Which four factors are classified as environmental in thermal comfort?", "opts": ["Air velocity, activity, clothing and thermal radiation", "Temperature, clothing, activity and humidity", "Temperature, thermal radiation, air velocity and humidity", "Humidity, clothing, air speed and activity"], "a": 2, "src": "L2 p.2 and p.21", "why": "Under ANSI/ASHRAE Standard 55-2023 the other two factors, activity and clothing, are personal."}, {"q": "What does psychrometry study?", "opts": ["The thermodynamic properties of air–water vapour mixtures", "Heat loss through building envelopes only", "Solar gain in subtropical climates", "Airflow inside mechanical ducts"], "a": 0, "src": "L2 p.25", "why": "The slide defines psychrometry in exactly these terms and lists dry/wet bulb, dew point, relative humidity and enthalpy."}, {"q": "Which set of strategies belongs to moderation by form?", "opts": ["Cooling towers, chillers and pumps", "Central air conditioning, sealed facade and intensive controls", "Orientation, thermal mass, courtyards, shading and natural air movement", "Fans, heating, cooling and local equipment"], "a": 2, "src": "L2 p.17", "why": "Moderation by form is the conservative, passive end of the spectrum."}, {"q": "Which vernacular method uses adobe, stone or mud brick to absorb heat by day and release it at night?", "opts": ["Thermal mass", "Wind catchers", "Orientation and layout", "Courtyards and open spaces"], "a": 0, "src": "L2 p.18", "why": "The vernacular methods table assigns this function specifically to thermal mass."}, {"q": "Which vernacular method captures cooler outdoor air while expelling hot air?", "opts": ["Roof ponds and green roofs", "Water features", "Wind catchers", "Cross ventilation"], "a": 2, "src": "L2 p.18", "why": "Cross ventilation promotes airflow through rooms; wind catchers capture and direct cooler air inside."}, {"q": "What is a heat load source associated with moisture?", "opts": ["Internal gains from occupants", "Solar heat gain", "Conduction through the envelope", "Latent heat"], "a": 3, "src": "L2 p.32", "why": "Latent heat is described as heat associated with moisture, to add or remove humidity."}, {"q": "Which components belong to the water side of an HVAC system?", "opts": ["Pipes, pumps, chillers and cooling towers", "Fans, ducts, diffusers and air handling units", "Variable-air-volume boxes, grilles and dampers", "Fan coil units and primary air units"], "a": 0, "src": "L2 p.35", "why": "The water side circulates water or a water-based fluid; the air side handles conditioned air."}, {"q": "What is the defining feature of Variable Refrigerant Volume (VRV)?", "opts": ["One outdoor unit supplies refrigerant directly to multiple indoor units", "It relies on a cooling tower for heat rejection", "It provides cooling only, with no heating capability", "It distributes chilled water to every zone"], "a": 0, "src": "L2 p.48", "why": "The inverter-driven compressor matches individual zone loads, and the system can heat and cool simultaneously."}, {"q": "A designer needs one system that can cool an open-plan office while heating a corner meeting room at the same time. Which arrangement best suits the purpose?", "opts": ["A two-pipe system", "A single-stack system", "A four-pipe system", "A constant air volume system with reheat only"], "a": 2, "src": "L2 p.51", "why": "A four-pipe system has separate chilled and hot water loops, allowing simultaneous cooling and heating in different zones; a two-pipe system cannot do both at once."}, {"q": "Which unit processes preliminary fresh air but contains no cooling function of its own?", "opts": ["Chiller", "Primary air unit", "Variable-air-volume box", "Fan coil unit"], "a": 1, "src": "L2 p.59", "why": "The Primary Air Unit (PAU) is a type of air handling unit that pre-treats fresh air before delivery to the air handling unit or fan coil unit."}, {"q": "How does a Constant Air Volume (CAV) system regulate temperature?", "opts": ["By varying the supply air volume through dampers", "By changing the chilled water pipe diameter", "By switching between mixing and displacement ventilation", "By varying supply air temperature with reheating or cooling coils"], "a": 3, "src": "L2 p.63", "why": "CAV supplies constant airflow at variable temperature; Variable Air Volume (VAV) does the opposite."}, {"q": "You are asked to design ventilation for a quiet office where enhanced indoor air quality is the priority. Which air distribution method best suits the purpose?", "opts": ["Mixing ventilation with overhead diffusers", "Displacement ventilation with low-level supply", "Exhaust ventilation only", "Jet nozzle ventilation"], "a": 1, "src": "L2 p.69", "why": "Displacement ventilation gives upward displacement, vertical stratification, lower draft and lower noise; mixing relies on dilution and has higher draft."}, {"q": "Which statement about chilled beams and radiant ceilings or floors is correct?", "opts": ["Chilled beams cannot be mounted at the ceiling", "Both deliver conditioned air through the cooled surface", "Radiant ceilings cool mainly by convection", "Both require complementary ventilation for fresh air and moisture control"], "a": 3, "src": "L2 p.70", "why": "Chilled beams cool by convection and radiant surfaces by radiation; neither provides fresh air on its own."}, {"q": "What does the stack effect describe?", "opts": ["The pressure drop across a filter", "Vertical airflow driven by indoor–outdoor temperature and air-density differences", "Water circulation in a chiller loop", "Airflow driven by fans in a duct"], "a": 1, "src": "L2 p.95", "why": "The slide defines the stack or chimney effect as temperature- and density-driven vertical movement through openings, shafts and stairwells."}], "L3": [{"q": "What is the essential role of a vent pipe in a drainage system?", "opts": ["To increase the water tank capacity", "To heat the wastewater", "To separate greywater from rainwater", "To protect water seals by preventing trap siphonage and equalising pressure"], "a": 3, "src": "L3 p.27", "why": "The vent pipe admits air so pressure is balanced on both sides of the trap, keeping sewer gas out."}, {"q": "Which legislation governs prescribed windows for natural lighting and ventilation?", "opts": ["Cap. 123F", "Cap. 123I", "Cap. 572", "Cap. 102A"], "a": 0, "src": "L3 p.7 and p.55", "why": "Cap. 123F Building (Planning) Regulations Part IV covers the Rectangular Horizontal Plane and the performance-based approach."}, {"q": "Under the prescriptive approach to prescribed windows in Hong Kong, which geometric requirement is used?", "opts": ["Rectangular Horizontal Plane", "Overall Thermal Transfer Value", "Vertical Daylight Factor", "Air Changes Per Hour"], "a": 0, "src": "L3 p.55", "why": "The slide contrasts the Rectangular Horizontal Plane prescriptive rule with the performance-based Vertical Daylight Factor."}, {"q": "Which parameter is used in the performance-based approach to daylight in the lecture?", "opts": ["Vertical Daylight Factor", "Air Changes Per Hour", "Unobstructed Vision Area", "Rectangular Horizontal Plane"], "a": 0, "src": "L3 p.55", "why": "Vertical Daylight Factor is listed under the performance-based approach, with a comparison study referenced."}, {"q": "You are reviewing a lighting proposal for a residential building in a Chinese climate Zone IV city with a permanent population under 500,000. Which daylighting reference day applies?", "opts": ["Summer Solstice", "Winter Solstice", "Dahan (severe cold)", "No reference day is required"], "a": 1, "src": "L3 p.56", "why": "The lighting requirement table assigns Winter Solstice to Zones IV, V and VI, while Dahan applies to Zones I, II, III and VII."}, {"q": "According to the Chinese lighting requirement table, what is the minimum daylighting duration for a city in Zones I, II, III or VII with population of at least 500,000?", "opts": ["At least 3 hours", "No restriction", "At least 2 hours", "At least 1 hour"], "a": 2, "src": "L3 p.56", "why": "The table gives 2 hours for population ≥50 (10,000 persons) in those zones, 3 hours for <50, and 1 hour for Zones V and VI."}, {"q": "What fresh air supply requirement applies to kitchens in licensed premises?", "opts": ["20 air changes per hour", "18 litres per second per room", "5 air changes per hour", "10 air changes per hour"], "a": 0, "src": "L3 p.57", "why": "The fresh air table lists 20 air changes per hour for licensed kitchens and 10 for non-domestic toilets."}, {"q": "Which fresh air provision is specified for purpose-designed office buildings?", "opts": ["18 litres per second per room", "1.1 litres per second per square metre or 10 litres per second per person", "20 air changes per hour", "5 air changes per hour"], "a": 1, "src": "L3 p.57", "why": "The slide gives this figure for purpose-designed offices, distinct from the air-change rates for kitchens and toilets."}, {"q": "A domestic building has a usable floor area between 1,320 and 13,200 square metres. How is the minimum floor space of its refuse storage and material recovery chamber determined?", "opts": ["Total usable floor space in square metres divided by 347", "One square metre per dwelling", "Total usable floor space multiplied by 347", "A fixed 347 square metres regardless of size"], "a": 0, "src": "L3 p.59", "why": "The table specifies this divisor for the stated domestic floor area band."}, {"q": "Which document sets out methods of refuse collection including the refuse chute and recycling corner?", "opts": ["BS 8102:2022", "Cap. 123F", "Cap. 572", "PNAP APP-35"], "a": 3, "src": "L3 p.60", "why": "The slide 'METHODS OF REFUSE COLLECTION' is headed PNAP APP-35 and lists refuse chute and recycling corner."}, {"q": "In the Automatic Refuse Collection System (ARCS), what happens immediately after refuse is accumulated in the gravity refuse chute?", "opts": ["It is treated by a wet scrubber", "It is weighed at the waste inlet", "It is conveyed by underground suction pipes to the centrifugal chamber", "It is compacted at the landfill"], "a": 2, "src": "L3 p.61", "why": "The sequence is: inlet → gravity chute → suction pipes → centrifugal chamber → air separation → wet scrubber → discharge → compaction."}, {"q": "In the Automatic Refuse Collection System (ARCS), what is the function of the wet scrubber?", "opts": ["To compact the refuse for landfill", "To weigh incoming waste", "To treat the air after separation from waste", "To suck refuse through the underground pipes"], "a": 2, "src": "L3 p.61", "why": "Step 4 separates air from waste at the chamber; step 5 treats that air with an acidic or alkaline solution in the wet scrubber."}, {"q": "In the Automatic Refuse Collection System, which items are directed to on-site treatment facilities?", "opts": ["Only food waste and glass", "Only recyclables collected off site", "Only general refuse", "General waste, paper, aluminium cans and plastic bottles"], "a": 3, "src": "L3 p.62", "why": "Waste from inlets on each floor is weighed, transported and stored centrally, then treated by waste compactor, food waste decomposer, glass crusher and trash compactor."}, {"q": "Which waterproofing type relies on the concrete structure itself, using admixtures such as crystalline or hydrophobic pore-blocking products?", "opts": ["Surface-applied coating", "Type B structurally integral", "Type A barrier protection", "Type C drained protection"], "a": 1, "src": "L3 p.40", "why": "Type B stops liquid water penetration by the structure itself; typical products include watertight concrete admixtures and joint sealing systems."}, {"q": "Which Supplementary Cementitious Material (SCM) is a by-product of coal-fired power plants?", "opts": ["Cavity Drain Membrane (CDM)", "Pulverised Fuel Ash (PFA)", "Bentonite geotextile", "Ground Granulated Blast-furnace Slag (GGBS)"], "a": 1, "src": "L3 p.41", "why": "The slide identifies PFA as the coal-fired power plant by-product and GGBS as the iron and steel production by-product."}, {"q": "Which measure belongs to the Sponge City approach to stormwater management?", "opts": ["Chiller plant", "Variable Refrigerant Volume unit", "Rain garden", "Cooling tower"], "a": 2, "src": "L3 p.51", "why": "The Sponge City list includes green roof, rain garden, retention tank, porous pavement, water harvesting, bioswale, wetland and eco-river channel."}, {"q": "What is a blue roof designed to do?", "opts": ["Generate electricity from rainwater", "Increase the roof's thermal mass only", "Provide permanent water storage with no release", "Provide initial temporary water storage then gradual release"], "a": 3, "src": "L3 p.52", "why": "The water-sensitive urban design slide defines the blue roof in exactly these terms."}], "L5": [{"q": "Which statement best expresses the idea used to open the Energetisation lecture?", "opts": ["Architecture is frozen music", "Form follows function", "Less is more", "A house is a machine for living in"], "a": 3, "src": "L5 p.8", "why": "Le Corbusier, Vers une architecture, 1923: 'Une maison est une machine à habiter'."}, {"q": "Which question belongs to the safety dimension of the building services framework?", "opts": ["How much environmental work does the form perform?", "What indoor conditions do people need?", "What failures must be avoided in an emergency?", "What exposures must the building prevent?"], "a": 2, "src": "L5 p.10", "why": "The slide groups questions under comfort, health and safety; emergency failures belong to safety."}, {"q": "Which of the following must be powered in the building-as-machine framework?", "opts": ["Only the fire safety system", "Power outlets, HVAC, fire safety, lighting, vertical transportation, building automation and specialty equipment", "Only the cooling system", "Only the lighting system"], "a": 1, "src": "L5 p.11", "why": "The slide lists these seven categories under 'What to power in the machine?'."}, {"q": "What is diversity factor?", "opts": ["The ratio of floor area to site area", "The ratio of the sum of individual maximum demands to the simultaneous maximum demand", "The ratio of embodied energy to operational energy", "The ratio of cooling load to heating load"], "a": 1, "src": "L5 p.15", "why": "A high diversity factor means a smaller source can serve more loads."}, {"q": "You are sizing the electrical supply for a development where the sum of individual peak demands far exceeds the measured simultaneous peak. Which concept justifies specifying a smaller source?", "opts": ["Diversity factor", "Stack effect", "Overall Thermal Transfer Value", "Vertical Daylight Factor"], "a": 0, "src": "L5 p.15", "why": "The slide states explicitly that a high diversity factor makes a smaller source commercially viable."}, {"q": "To what voltage is a consumer substation transformer stepped down in the distribution chain?", "opts": ["132 kilovolts", "11 kilovolts", "400 amperes", "400 volts"], "a": 1, "src": "L5 p.18", "why": "The slide states 'Consumer sub-station transformer to 11kV'; 400 amperes is a switchboard rating, not a voltage."}, {"q": "What is a busduct used for in power distribution?", "opts": ["Carrying substantial current with copper or aluminium busbars in a protective casing", "Collecting rainwater", "Filtering supply air", "Rejecting heat from a chiller loop"], "a": 0, "src": "L5 p.23", "why": "The busduct is a prefabricated alternative to power cables or cable trays in commercial, industrial and large residential buildings."}, {"q": "Which ordinance requires standby power supply when the normal power supply is lost?", "opts": ["Cap. 295 Dangerous Goods Ordinance", "Cap. 123F Building (Planning) Regulations", "Cap. 572 Fire Safety (Buildings) Ordinance", "Cap. 102A Waterworks Regulations"], "a": 2, "src": "L5 p.27", "why": "Cap. 572 requires stand-by power for specified installations in the event of loss of normal supply."}, {"q": "You are specifying backup for a hospital's critical equipment where the supply must not be interrupted even briefly while the generator starts. Which system best suits the purpose?", "opts": ["Local switch and dimmer", "Uninterruptible Power Supply (UPS)", "Refuse chute", "Timer"], "a": 1, "src": "L5 p.27", "why": "The UPS provides backup when the main source fails or is disrupted; hospitals and data centres are listed as common applications."}, {"q": "What is a Central Battery System (CBS)?", "opts": ["A centralised battery bank supplying multiple emergency lights and safety systems", "A chilled water storage tank", "A diesel generator with a fuel tank", "A battery at each emergency light"], "a": 0, "src": "L5 p.30", "why": "The slide defines the CBS and cites FSD Circular 5/2021 for entertainment premises."}, {"q": "What volume condition applies to a dangerous goods fuel tank room without a NAF III fixed sprayer unit?", "opts": ["Less than 150 metres", "Less than 12 metres", "Less than 42.5 cubic metres", "Less than 135 litres"], "a": 2, "src": "L5 p.29", "why": "The slide gives this volume requirement under Dangerous Goods Store signage, Cap. 295."}, {"q": "Which renewable power components are listed in the lecture?", "opts": ["Cooling towers, chillers and pumps", "Rain gardens and bioswales", "Refuse chutes and compactors", "Photovoltaic panels, building-integrated photovoltaic panels, wind turbines and solar hot water systems"], "a": 3, "src": "L5 p.45", "why": "These four components are listed on the Renewable Power slide."}, {"q": "What is a chilled water storage system used for in HVAC?", "opts": ["Treating greywater", "Rejecting heat through a cooling tower", "Heating water during the night", "Storing chilled water during off-peak hours for use at peak demand"], "a": 3, "src": "L5 p.86", "why": "The slide defines chilled water storage as an energy storage solution paired with geothermal heat exchange."}, {"q": "Which benefit is associated with the District Cooling System at Kai Tak?", "opts": ["Reduced heat island effect and elimination of equipment noise and vibration", "Each consumer building must install its own chiller", "No need for heat exchangers", "Higher noise from rooftop cooling towers"], "a": 0, "src": "L5 p.91", "why": "The slide states consumer buildings need no own chillers, allowing flexible design and reducing heat island effect, noise and vibration."}]};
+const LETTERS = ['A','B','C','D'];
+const state = {};
+Object.keys(DATA).forEach(k=>state[k]={answers:new Array(DATA[k].length).fill(null),submitted:false,started:false,seconds:30*60,tick:null});
+
+function makeUI(){
+  const tabs=document.getElementById('tabs'), panels=document.getElementById('panels');
+  const keys=Object.keys(DATA);
+  tabs.innerHTML=keys.map((k,i)=>'<button class="tab'+(i===0?' on':'')+'" id="tab_'+k+'" onclick="tab(\''+k+'\')">Lecture '+k.slice(-1)+' · '+DATA[k].length+' questions</button>').join('');
+  panels.innerHTML=keys.map((k,i)=>{
+    const q=DATA[k];
+    return '<div class="panel'+(i===0?' on':'')+'" id="panel_'+k+'">'+
+      '<div class="head"><div><h2 style="margin:0;font-size:18px">Lecture '+k.slice(-1)+' mock quiz</h2>'+
+      '<div class="small">'+q.length+' multiple-choice questions · start the timer when ready</div></div>'+
+      '<div class="timer" id="timer_'+k+'"><div class="lbl">Time remaining</div><div class="val" id="clock_'+k+'">30:00</div></div></div>'+
+      '<div class="bar"><div class="info" id="info_'+k+'">Not started · answered 0 / '+q.length+'</div><div>'+
+      '<button class="btn primary" id="start_'+k+'" onclick="start(\''+k+'\')">Start timer</button> '+
+      '<button class="btn primary" onclick="submitQ(\''+k+'\')">Submit answers</button> '+
+      '<button class="btn" onclick="resetQ(\''+k+'\')">Restart</button></div></div>'+
+      '<div id="notice_'+k+'"></div><div id="qs_'+k+'">'+q.map((item,j)=>
+        '<div class="q" id="q_'+k+'_'+j+'"><div class="hd"><span class="num">'+(j+1)+'.</span></div>'+
+        '<p class="stem">'+item.q+'</p>'+
+        item.opts.map((o,n)=>'<label class="opt" id="o_'+k+'_'+j+'_'+n+'"><input type="radio" name="'+k+j+'" value="'+n+'" onchange="choose(\''+k+'\','+j+','+n+')"><span class="letter">'+LETTERS[n]+'.</span><span>'+o+'</span></label>').join('')+
+        '</div>').join('')+'</div><div id="res_'+k+'"></div></div>';
+  }).join('');
+}
+function tab(k){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('tab_'+k).classList.add('on');
+  document.getElementById('panel_'+k).classList.add('on');
+}
+function choose(k,j,n){
+  const s=state[k]; if(s.submitted) return;
+  s.answers[j]=n;
+  for(let t=0;t<4;t++) document.getElementById('o_'+k+'_'+j+'_'+t).classList.toggle('sel',t===n);
+  info(k);
+}
+function info(k){
+  const s=state[k], n=s.answers.filter(x=>x!==null).length;
+  document.getElementById('info_'+k).textContent=(s.started?'':'Not started · ')+'Answered '+n+' / '+DATA[k].length;
+}
+function paint(k){
+  const s=state[k], m=String(Math.floor(s.seconds/60)).padStart(2,'0'), sec=String(s.seconds%60).padStart(2,'0');
+  document.getElementById('clock_'+k).textContent=m+':'+sec;
+  const t=document.getElementById('timer_'+k);
+  t.classList.toggle('warn',s.seconds<=300&&s.seconds>60);
+  t.classList.toggle('danger',s.seconds<=60);
+}
+function start(k){
+  const s=state[k]; if(s.started||s.submitted) return;
+  s.started=true; document.getElementById('start_'+k).style.display='none'; info(k);
+  clearInterval(s.tick); s.tick=setInterval(()=>{
+    s.seconds--;
+    if(s.seconds<=0){
+      s.seconds=0; paint(k); clearInterval(s.tick);
+      document.getElementById('notice_'+k).insertAdjacentHTML('beforeend','<div class="notice"><b>Time is up.</b> The timer has stopped, but you may keep answering and submit when ready.</div>');
+      return;
+    }
+    paint(k);
+  },1000); paint(k);
+}
+function submitQ(k){
+  const s=state[k]; if(s.submitted) return;
+  s.submitted=true; clearInterval(s.tick);
+  const arr=DATA[k]; let score=0;
+  arr.forEach((q,i)=>{
+    const ok=s.answers[i]===q.a; if(ok) score++;
+    for(let t=0;t<4;t++){
+      const el=document.getElementById('o_'+k+'_'+i+'_'+t);
+      el.classList.remove('sel');
+      if(t===q.a) el.classList.add('correct'); else if(t===s.answers[i]) el.classList.add('wrong');
+      el.querySelector('input').disabled=true;
+    }
+  });
+  const pct=Math.round(score/arr.length*100);
+  const grade=pct>=80?'Pass — secure':pct>=60?'Borderline — revise':'Needs work';
+  const un= s.answers.filter(x=>x===null).length;
+  if(un>0) document.getElementById('notice_'+k).insertAdjacentHTML('beforeend','<div class="notice">'+un+' question(s) left unanswered. They count as incorrect.</div>');
+  let html='<div class="result"><div class="small">Your score · Lecture '+k.slice(-1)+'</div><div><span class="score">'+score+' / '+arr.length+'</span><span class="grade">'+grade+' · '+pct+'%</span></div><div class="small" style="margin-top:8px">Correct answers are green; your wrong choices are red. Sources follow each explanation.</div></div>';
+  arr.forEach((q,i)=>{
+    const ok=s.answers[i]===q.a;
+    const chosen=s.answers[i]===null?'No answer':LETTERS[s.answers[i]]+'. '+q.opts[s.answers[i]];
+    html+='<div class="rev"><div class="rh"><span class="num">'+(i+1)+'.</span><span class="badge '+(ok?'ok':s.answers[i]===null?'na':'no')+'">'+(ok?'Correct':s.answers[i]===null?'Unanswered':'Incorrect')+'</span></div>'+
+      '<p class="stem">'+q.q+'</p><div class="why"><b>Your answer:</b> '+chosen+'<br><b>Correct answer:</b> '+LETTERS[q.a]+'. '+q.opts[q.a]+'</div>'+
+      '<div class="src"><b>Source — </b>'+q.src+'</div><div class="why"><b>Explanation — </b>'+q.why+'</div></div>';
+  });
+  document.getElementById('res_'+k).innerHTML=html;
+  document.getElementById('panel_'+k).scrollIntoView({behavior:'smooth'});
+}
+function resetQ(k){ location.reload(); }
+makeUI();
+</script>
+</body>
+</html>
